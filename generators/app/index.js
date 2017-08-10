@@ -3,15 +3,16 @@
 const Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
+  initializing() {
+    this.composeWith(require.resolve(
+      'generator-ss-validate-commit-msg/generators/app'));
+  }
   writing() {
     this.fs.extendJSON('package.json', {
-      scripts: {
-        release: 'standard-version',
-        commitmsg: 'validate-commit-msg'}});
+      scripts: {release: 'standard-version'}});
   }
 
   install() {
-    this.yarnInstall(
-      ['validate-commit-msg', 'husky', 'standard-version'], {dev: true});
+    this.yarnInstall(['standard-version'], {dev: true});
   }
 };
